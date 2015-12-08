@@ -201,8 +201,8 @@ public class TwitterDB {
 	}
 
 	public List<String> getRedirectNameList(String name) {
-		TwitterDB db = new TwitterDB();
-		List<String> list = db.getRedirectList(db.selectRdFromList(db
+	
+		List<String> list = this.getRedirectList(this.selectRdFromList(this
 				.selectPageId(name)));
 		return list;
 	}
