@@ -13,6 +13,7 @@ public class getCompanyInfo {
 		TwitterDB db = new TwitterDB();
 		FollowersListUtil flu = new FollowersListUtil();
 		String id = args[0];
+		
 		List<String> emptyCompanyName = db.getEmptyCompanyNameList(id);
 
 		for (String s : emptyCompanyName) {

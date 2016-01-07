@@ -20,7 +20,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.MyApp.TwitterData.getFollowersInfo</mainClass>
+                  <mainClass>com.MyApp.TwitterData.CopyOfgetFollowersInfo</mainClass>
                 </transformer>
               </transformers>
             </configuration>

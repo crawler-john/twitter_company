@@ -36,7 +36,7 @@ import com.MyApp.TwitterData.Util.HttpClientManager;
  */
 public class TwitterService {
     private static final String PASSWORD = "password";
-    private static final String PROXY = "proxy";
+//    private static final String PROXY = "proxy";
     private static final String USER = "user";
     private Logger logger;
     /**oauth认证所需的密钥*/
@@ -47,7 +47,7 @@ public class TwitterService {
     private String password;
     /**代理地址和代理proxy*/
     private String portadd;
-    private Proxy proxy;
+//    private Proxy proxy;
     /**scribe lib*/
     private Scribe sb;
     private Token tk;
@@ -78,11 +78,11 @@ public class TwitterService {
         if(null!=portadd){
             String[] arrystr = portadd.split(":");
             HttpHost httphost = new HttpHost(arrystr[0], Integer.valueOf(arrystr[1]));
-            DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(httphost);
+//            DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(httphost);
             httpclient = HttpClients.custom()
                     .setConnectionManager(hcm.getManager())
                     .setSSLSocketFactory(hcm.getssl())
-                    .setRoutePlanner(routePlanner)
+//                    .setRoutePlanner(routePlanner)
                     .build();
         }else{
             httpclient = HttpClients.custom()
@@ -135,7 +135,7 @@ public class TwitterService {
         }
         body = EntityUtils.toString(entity);
         tk = new Token(this.getToken(body), tk.getSecret());
-        tk = sb.getAccessToken(tk, this.getVerifier(body), proxy);
+        tk = sb.getAccessToken(tk, this.getVerifier(body), null);
         System.out.println("oauth 认证成功");
     }
     
@@ -155,7 +155,7 @@ public class TwitterService {
         Boolean flag = true;
         while (flag) {
             try {
-                resp = req.send(proxy);
+                resp = req.send(null);
                 jsonstr = resp.getBody();
                 flag = false;
             } catch (Exception e) {
@@ -183,7 +183,7 @@ public class TwitterService {
         Boolean flag = true;
        while (flag) {
             try {
-                resp = req.send(proxy);
+                resp = req.send(null);
                 jsonstr = resp.getBody();
                 flag = false;
             } catch (Exception e) {
@@ -218,7 +218,7 @@ public class TwitterService {
         Boolean flag = true;
         while (flag) {
             try {
-                resp = req.send(proxy);
+                resp = req.send(null);
                 jsonstr = resp.getBody();
                 flag = false;
             } catch (Exception e) {
@@ -247,7 +247,7 @@ public class TwitterService {
         Boolean flag = true;
         while (flag) {
             try {
-                resp = req.send(proxy);
+                resp = req.send(null);
                 jsonstr = resp.getBody();
                 flag = false;
             } catch (Exception e) {
@@ -313,18 +313,18 @@ public class TwitterService {
         }
        
         try {
-            portadd = tp.getProperty(PROXY);
-            String[] arrystr = portadd.split(":");
-            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(Inet4Address.getByName(arrystr[0]),
-                    Integer.valueOf(arrystr[1])));
+//            portadd = tp.getProperty(PROXY);
+//            String[] arrystr = portadd.split(":");
+//            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(Inet4Address.getByName(arrystr[0]),
+//                    Integer.valueOf(arrystr[1])));
         } catch (Exception e) {
             logger.error("Proxy配置读取失败，不使用proxy" + e);
             portadd=null;
-            proxy=null;
+           // proxy=null;
         }
         /**读取资源文件，并request获得第一个oauth_token*/
         sb = new Scribe(tp);
-        tk = sb.getRequestToken(proxy);
+        tk = sb.getRequestToken(null);
         oauth_token = tk.getToken();
         
     }
