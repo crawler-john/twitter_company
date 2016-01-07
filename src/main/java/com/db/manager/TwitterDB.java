@@ -177,7 +177,7 @@ public class TwitterDB {
 					params);
 
 		} catch (Exception e) {
-			System.out.println("已经差如果这个人了" + follower.getUserId());
+			System.out.println("已经插入过这个人了" + follower.getUserId());
 		} finally {
 			dbServer.close();
 		}
@@ -194,7 +194,7 @@ public class TwitterDB {
 			dbServer.insert("t_company_followers", "companyId,userId", params);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("已经插入过关系+++"+twitter_id+user_id);
 		} finally {
 			dbServer.close();
 		}
