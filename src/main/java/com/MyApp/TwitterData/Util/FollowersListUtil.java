@@ -170,8 +170,8 @@ public class FollowersListUtil {
 						if (resettime < 0) {
 							resettime = 0 - resettime;
 						}
-						System.out.println("开始等待 " + resettime + "ms");
-						return resettime;
+						System.out.println("开始等待 " + (resettime+10000) + "ms");
+						return (resettime+10000);
 					}
 				}
 			} catch (JSONException ex) {
