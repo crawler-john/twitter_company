@@ -34,14 +34,24 @@ public class CopyOfgetFollowersInfo {
 			long cursor = (long)-1;
 			//开始存储
 			System.out.println(strs[0]+" "+ strs[1]);
+			db.updateState(screenName, "1");
 			while (0 != cursor) {
 				time_a = System.currentTimeMillis();
-
+				long rate = 0;
+				rate = flu.GetWaitTime(ts.getRateLimitStatus());
+				System.out.println("GetWaitTime耗时 : "
+						+ (System.currentTimeMillis() - time_a) / 1000f + " 秒 ");
+				Thread.sleep(rate);
+				
+				
+				time_a = System.currentTimeMillis();
 				jsonstr = ts.getFollowersList(screenName, cursor);
 				System.out.println("getFollowersList耗时 : "
 						+ (System.currentTimeMillis() - time_a) / 1000f + " 秒 ");
 				List<followerModel> list = new ArrayList<followerModel>();
 				time_a = System.currentTimeMillis();
+				
+				
 				try {
 					cursor = flu.getCursor(jsonstr);
 					logger.info(screenName + " + " + cursor);
@@ -54,12 +64,7 @@ public class CopyOfgetFollowersInfo {
 				}
 				System.out.println("存储耗时 : "
 						+ (System.currentTimeMillis() - time_a) / 1000f + " 秒 ");
-				time_a = System.currentTimeMillis();
-				long rate = 0;
-				rate = flu.GetWaitTime(ts.getRateLimitStatus());
-				System.out.println("GetWaitTime耗时 : "
-						+ (System.currentTimeMillis() - time_a) / 1000f + " 秒 ");
-				Thread.sleep(rate);
+				
 			}
 
 			db.updateState(screenName, "0");

@@ -328,4 +328,35 @@ public class TwitterService {
         oauth_token = tk.getToken();
         
     }
+    /**
+     * 最近200条tweets信息
+     * @param screenName
+     * @return
+     */
+    public String getTimeLine(String screenName){
+        Request req = null;
+        Response resp = null;
+        String jsonstr = null;
+        req = new Request(Request.Verb.GET,
+                "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name="+screenName+"&count=200");
+        sb.signRequest(req, tk);        
+        Boolean flag = true;
+        while (flag) {
+            try {
+                resp = req.send(null);
+                jsonstr = resp.getBody();
+                flag = false;
+            } catch (Exception e) {
+                logger.error("没有get body" + e);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    logger.error("sleep失败" + e);
+                }
+            }
+        }        
+        return jsonstr;
+    }
+    
+    
 }
